@@ -1,4 +1,4 @@
-// dsh-browser-auto — CLIENT half of the dynamic Cordis plugin.
+// browser-auto — CLIENT half of the dynamic Cordis plugin.
 //
 // Paste the ENTIRE content of this file into cordis_define's code.client
 // (it is a plain-JS function body that returns a Cordis Plugin; no imports,
@@ -9,7 +9,7 @@
 const h = React.createElement
 
 return {
-  name: 'dsh-browser-auto-client',
+  name: 'browser-auto-client',
   inject: ['timer'],
   apply(ctx) {
     styles.insert(`

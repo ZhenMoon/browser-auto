@@ -1,4 +1,4 @@
-// dsh-browser-auto — HOST half of the dynamic Cordis plugin.
+// browser-auto — HOST half of the dynamic Cordis plugin.
 //
 // Paste the ENTIRE content of this file into cordis_define's code.host
 // (it is a plain-JS function body that returns a Cordis Plugin; no imports).
@@ -16,9 +16,9 @@
 // ── CONFIGURATION ─────────────────────────────────────────────────
 // Absolute path to driver.mjs on YOUR machine. The dynamic host sandbox
 // has no process/env access, so this must be a literal — edit it.
-//   Windows: 'C:\\Users\\you\\dsh-browser-auto\\driver.mjs'
-//   macOS:   '/Users/you/dsh-browser-auto/driver.mjs'
-const DRIVER = 'C:\\Users\\you\\dsh-browser-auto\\driver.mjs'
+//   Windows: 'C:\\Users\\you\\browser-auto\\driver.mjs'
+//   macOS:   '/Users/you/browser-auto/driver.mjs'
+const DRIVER = 'C:\\Users\\you\\browser-auto\\driver.mjs'
 
 // Everything else derives from the driver location: screenshots live in
 // <driver dir>/shots/current.png and the driver is spawned with its own
@@ -30,7 +30,7 @@ const SHOT = WORK + SEP + 'shots' + SEP + 'current.png'
 const NODE_FALLBACK = 'C:\\Program Files\\nodejs\\node.exe'
 
 return {
-  name: 'dsh-browser-auto',
+  name: 'browser-auto',
   inject: ['subprocess', 'fs', 'webServer'],
   apply(ctx) {
     let handle = null
@@ -332,6 +332,6 @@ return {
         try { handle.terminate() } catch { /* noop */ }
         handle = null
       }
-    }, 'dsh-browser-auto.cleanup')
+    }, 'browser-auto.cleanup')
   },
 }

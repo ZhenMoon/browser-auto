@@ -1,8 +1,17 @@
-# dsh-browser-auto
+# browser-auto
 
-A real-browser automation plugin for [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) (DSH), built as a dynamic Cordis plugin. It gives the agent **browser_* model tools** backed by a genuine headless Edge/Chrome instance, plus a **live screenshot panel** rendered inside the GUI.
+A real-browser automation plugin for [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) (DSH), built as a dynamic Cordis plugin. It turns a genuine headless Edge/Chrome instance into a first-class capability of the agent: 12 `browser_*` model tools for opening pages, reading structured snapshots, clicking, typing, pressing keys, navigating history, taking screenshots, waiting for rendering, and arbitrary in-page evaluation — plus a **live screenshot panel** rendered inside the GUI so you can watch exactly what the browser sees.
 
 No npm dependencies. The driver talks to the browser over the raw Chrome DevTools Protocol using Node's built-in `fetch` and `WebSocket` (Node ≥ 22).
+
+**Highlights**
+
+- **Real browser, real input** — every action goes through CDP: real mouse events at element centers, trusted `Input.insertText` keystrokes that work with React/Vue-managed inputs (which ignore synthetic value setters), and a key map for Enter/Tab/arrows/PageUp/…
+- **Structured snapshots, not raw HTML** — each page digest returns the URL, title, body text, an indexed input list and an indexed clickable-element list, so the agent locates targets by snapshot index, CSS selector, or visible text.
+- **Zero dependencies** — only Node ≥ 22 built-ins (`fetch`, `WebSocket`, `child_process`); no npm install, no Playwright or Puppeteer.
+- **Live GUI panel** — the plugin's run card shows status, URL/title, a screenshot refreshed every 2 seconds, and back / reload / screenshot / close buttons.
+- **Privacy-safe by default** — every launch uses a fresh ephemeral browser profile that is deleted on close; no cookies or history persist between sessions; screenshots stay on your machine and are gitignored.
+- **Self-healing** — if the browser or the driver process dies, the next tool call restarts it automatically.
 
 ## What it does
 
@@ -28,18 +37,18 @@ DSH GUI ◀──browser-state/action RPC── client half (panel)
 
 ## Install
 
-1. Clone / place this repo somewhere on the machine, e.g. `C:\dsh-browser-auto`.
+1. Clone / place this repo somewhere on the machine, e.g. `C:\browser-auto`.
 2. In `host-half.js`, set the `DRIVER` constant to the absolute path of `driver.mjs` on your machine:
 
    ```js
-   const DRIVER = 'C:\\dsh-browser-auto\\driver.mjs'
+   const DRIVER = 'C:\\browser-auto\\driver.mjs'
    ```
 
 3. In your DSH session, define the plugin — paste the **entire content** of `host-half.js` into `code.host` and of `client-half.js` into `code.client`:
 
    ```
    cordis_define(plugin: { kind: "new", idPrefix: "brws" },
-                 name: "dsh-browser-auto",
+                 name: "browser-auto",
                  purpose: "Real browser automation: browser_* tools + live screenshot panel",
                  code: { host: <host-half.js>, client: <client-half.js> })
    ```

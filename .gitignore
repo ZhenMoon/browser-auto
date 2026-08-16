@@ -1,0 +1,9 @@
+# Runtime artifacts — browser profiles may contain cookies/history and must
+# never be committed, and screenshots may contain private page content.
+.dsh-browser/
+profile-*/
+shots/
+*.png
+
+node_modules/
+*.log
